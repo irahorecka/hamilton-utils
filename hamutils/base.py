@@ -1,31 +1,13 @@
 import os
-import yaml
+import subprocess
 
 
-class HamiltonBase():
-    def __init__(self, yml_key):
-        self.yml_key=yml_key
-        self.set_environ()
+class HamiltonBase:
+    def __init__(self, path_):
+        self.path_ = path_
 
     def __repr__(self):
-        return f'HamiltonBase("{self.yml_key}")'
-
-    def rm_(self, endswith):
-        for file_ in self.listdir():
-            if file_.endswith(endswith):
-                try:
-                    print(os.path.join(self.path_, file_))
-                    os.remove(os.path.join(self.path_, file_))
-                except PermissionError as e:
-                    print(e)
-
-    def open_(self, filename, **kwargs):
-        mode=kwargs['mode']
-        endswith=kwargs['endswith']
-        if not filename.endswith(endswith):
-            raise Exception(f'Woah, this is not a {endswith} file.')
-        with open(os.path.join(self.path_, filename), mode) as file_:
-            return file_.read()
+        return f'{__class__.__name__}("{self.path_}")'
 
     @property
     def path(self):
@@ -35,20 +17,57 @@ class HamiltonBase():
     def path(self, path_):
         self.path_ = path_
 
-    @property
-    def path_key(self):
-        return self.yml_key
-
-    @path_key.setter
-    def path_key(self, yml_key):
-        self.yml_key=yml_key
-        self.set_environ()
+    def rm_all(self, endswith_):
+        for file_ in self.listdir():
+            if file_.endswith(endswith_):
+                try:
+                    os.remove(os.path.join(self.path_, file_))
+                except PermissionError as e:
+                    print(e)
 
     def listdir(self):
         return os.listdir(self.path_)
 
-    def set_environ(self):
-        with open("environ.yml") as f:
-            data = yaml.load(f, Loader=yaml.FullLoader) 
-            self.path_=data[self.yml_key]
+    def listcsv(self):
+        return [i for i in self.listdir() if i.endswith(".csv")]
 
+    def listxls(self):
+        return [i for i in self.listdir() if i.endswith(".xls")]
+
+    def listxlsx(self):
+        return [i for i in self.listdir() if i.endswith(".xlsx")]
+
+
+class FileBase:
+    def __init__(self, filename, path_):
+        self.filename = filename
+        self.path_ = path_
+        with open(os.path.join(self.path_, self.filename), "r") as file_:
+            self.file_ = file_.readlines()
+
+    def readlines(self):
+        return self.file_
+
+    def find(self, str_):
+        return [line for line in self.readlines() if str_ in line]
+        # for line in self.readlines():
+        #     if str_ in line:
+        #         yield line
+
+    def find_regex(self, re_pattern):
+        pass
+
+
+class Trc(FileBase):
+    def __init__(self, trc_file, path_):
+        super().__init__(trc_file, path_)
+        self.trc_file = trc_file
+
+
+class Log(FileBase):
+    def __init__(self, log_file, path_):
+        super().__init__(log_file, path_)
+        self.log_file = log_file
+
+    def to_dict(self):
+        pass

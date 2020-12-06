@@ -1,3 +1,7 @@
 from .hamutils import (
-    LogFile
+    LogFile,
+    Methods,
+    Library,
+    Labware,
+    SupportingFiles,
 )

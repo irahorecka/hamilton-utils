@@ -1,24 +1,91 @@
-from .base import HamiltonBase
+import hamutils
+from .base import HamiltonBase, Trc, Log
+
 
 class LogFile(HamiltonBase):
     def __init__(self):
-        super().__init__('logfile')
+        self.path_ = "C:\\Program Files (x86)\\HAMILTON\\LogFiles"
+        super().__init__(self.path_)
 
     def __repr__(self):
-        return f'LogFile("{self.yml_key}")'
-        
+        return f'{__class__.__name__}("{self.path_}")'
+
     def rm_ldf(self):
-        self.rm_('.ldf')
+        self.rm_all(".ldf")
 
     def rm_mdf(self):
-        self.rm_('.mdf')
+        self.rm_all(".mdf")
 
-    def open_trc(self, filename, **kwargs):
-        kwargs['endswith']='.trc'
-        trc=self.open_(filename, **kwargs)
-        return trc
+    def open(self, filename):
+        accepted_ext = {
+            ".trc": Trc,
+            ".log": Log,
+        }
+        file_ext = "." + filename.split(".")[-1]
+        self.file_obj = accepted_ext.get(file_ext)
+        if not self.file_obj:
+            raise Exception(f"{filename} is not an accepted file.")
+        return self.file_obj(filename, self.path_)
 
-    def open_log(self, filename, **kwargs):
-        kwargs['endswith']='.log'
-        trc=self.open_(filename, **kwargs)
-        return trc
+    def listtrc(self):
+        return [i for i in self.listdir() if i.endswith(".trc")]
+
+    def listlog(self):
+        return [i for i in self.listdir() if i.endswith(".log")]
+
+    def listini(self):
+        return [i for i in self.listdir() if i.endswith(".ini")]
+
+    def listldf(self):
+        return [i for i in self.listdir() if i.endswith(".ldf")]
+
+    def listmdf(self):
+        return [i for i in self.listdir() if i.endswith(".mdf")]
+
+
+class Methods(HamiltonBase):
+    def __init__(self, path_):
+        if not self.path_:
+            self.path_ = "C:\\Program Files (x86)\\HAMILTON\\Methods"
+        else:
+            self.path_ = path_
+        super().__init__(self.path_)
+
+    def __repr__(self):
+        return f'{__class__.__name__}("{self.path_}")'
+
+
+class Library(HamiltonBase):
+    def __init__(self, path_):
+        if not self.path_:
+            self.path_ = "C:\\Program Files (x86)\\HAMILTON\\Library"
+        else:
+            self.path_ = path_
+        super().__init__(self.path_)
+
+    def __repr__(self):
+        return f'{__class__.__name__}("{self.path_}")'
+
+
+class Labware(HamiltonBase):
+    def __init__(self, path_):
+        if not self.path_:
+            self.path_ = "C:\\Program Files (x86)\\HAMILTON\\Labware"
+        else:
+            self.path_ = path_
+        super().__init__(self.path_)
+
+    def __repr__(self):
+        return f'{__class__.__name__}("{self.path_}")'
+
+
+class SupportingFiles(HamiltonBase):
+    def __init__(self, path_):
+        if not self.path_:
+            self.path_ = "C:\\Program Files (x86)\\HAMILTON\\SupportingFiles"
+        else:
+            self.path_ = path_
+        super().__init__(self.path_)
+
+    def __repr__(self):
+        return f'{__class__.__name__}("{self.path_}")'

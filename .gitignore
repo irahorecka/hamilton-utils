@@ -130,3 +130,6 @@ dmypy.json
 
 # VSCode
 .vscode/
+
+# venv
+._env_hamutils/
