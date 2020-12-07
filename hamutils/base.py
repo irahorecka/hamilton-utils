@@ -61,8 +61,7 @@ class TextFileBase:
         return self.filename
 
     def readline(self):
-        for line in self.file_:
-            yield line
+        yield from self.file_
 
     def readlines(self):
         return self.file_
