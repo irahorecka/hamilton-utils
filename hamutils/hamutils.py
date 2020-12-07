@@ -1,5 +1,5 @@
 import hamutils
-from .base import HamiltonBase, Trc, Log
+from .base import HamiltonBase
 from .bat import admin_rm
 
 
@@ -16,17 +16,6 @@ class LogFile(HamiltonBase):
 
     def rm_mdf(self):
         admin_rm(self.path_, "*.mdf")
-
-    def open(self, filename):
-        accepted_ext = {
-            ".trc": Trc,
-            ".log": Log,
-        }
-        file_ext = "." + filename.split(".")[-1]
-        self.file_obj = accepted_ext.get(file_ext)
-        if not self.file_obj:
-            raise Exception(f"{filename} is not an accepted file.")
-        return self.file_obj(filename, self.path_)
 
     def listtrc(self):
         return [i for i in self.listdir() if i.endswith(".trc")]
