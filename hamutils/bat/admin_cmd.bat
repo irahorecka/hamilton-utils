@@ -1,1 +1,1 @@
-powershell -Command "Start-Process %1 %2 -Verb runAs" 
+powershell -command Start-Process powershell -Verb runAs -ArgumentList @('-Command', 'Remove-Item', \"'%1'\")

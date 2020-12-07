@@ -18,6 +18,7 @@ class HamiltonBase:
         self.path_ = path_
 
     def rm_all(self, endswith_):
+        subprocess.call(["./bat/admin_cmd.bat", ""])
         for file_ in self.listdir():
             if file_.endswith(endswith_):
                 try:

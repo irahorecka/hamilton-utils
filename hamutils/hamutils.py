@@ -1,5 +1,6 @@
 import hamutils
 from .base import HamiltonBase, Trc, Log
+from .bat import admin_rm
 
 
 class LogFile(HamiltonBase):
@@ -11,10 +12,10 @@ class LogFile(HamiltonBase):
         return f'{__class__.__name__}("{self.path_}")'
 
     def rm_ldf(self):
-        self.rm_all(".ldf")
+        admin_rm(self.path_, "*.ldf")
 
     def rm_mdf(self):
-        self.rm_all(".mdf")
+        admin_rm(self.path_, "*.mdf")
 
     def open(self, filename):
         accepted_ext = {
