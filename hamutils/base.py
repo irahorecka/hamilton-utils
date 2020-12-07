@@ -1,6 +1,5 @@
 import os
 import re
-import subprocess
 
 
 class HamiltonBase:
@@ -17,15 +16,6 @@ class HamiltonBase:
     @path.setter
     def path(self, path_):
         self.path_ = path_
-
-    def rm_all(self, endswith_):
-        subprocess.call(["./bat/admin_cmd.bat", ""])
-        for file_ in self.listdir():
-            if file_.endswith(endswith_):
-                try:
-                    os.remove(os.path.join(self.path_, file_))
-                except PermissionError as e:
-                    print(e)
 
     def open(self, filename):
         accepted_ext = {
