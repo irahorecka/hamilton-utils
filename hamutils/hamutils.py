@@ -1,8 +1,14 @@
 from .base import HamiltonBase
 from .bat import admin_rm
+from .files import Trc, Log
 
 
 class LogFile(HamiltonBase):
+    accepted_file_ext = {
+        ".trc": Trc,
+        ".log": Log,
+    }
+
     def __init__(self):
         self.path_ = "C:\\Program Files (x86)\\HAMILTON\\LogFiles"
         super().__init__(self.path_)

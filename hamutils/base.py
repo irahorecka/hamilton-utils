@@ -3,6 +3,8 @@ import re
 
 
 class HamiltonBase:
+    accepted_file_ext = {}
+
     def __init__(self, path_):
         self.path_ = path_
 
@@ -17,16 +19,12 @@ class HamiltonBase:
     def path(self, path_):
         self.path_ = path_
 
-    def open(self, filename):
-        accepted_ext = {
-            ".trc": Trc,
-            ".log": Log,
-        }
-        file_ext = "." + filename.split(".")[-1]
-        self.file_obj = accepted_ext.get(file_ext)
+    def open(self, filename_):
+        file_ext = "." + filename_.split(".")[-1]
+        self.file_obj = self.accepted_file_ext.get(file_ext)
         if not self.file_obj:
-            raise Exception(f"{filename} is not an accepted file.")
-        return self.file_obj(filename, self.path_)
+            raise Exception(f"{filename_} is not an accepted file.")
+        return self.file_obj(filename_, self.path_)
 
     def listdir(self):
         return os.listdir(self.path_)
@@ -42,10 +40,10 @@ class HamiltonBase:
 
 
 class TextFileBase:
-    def __init__(self, filename, path_):
-        self.filename = filename
+    def __init__(self, filename_, path_):
+        self.filename_ = filename_
         self.path_ = path_
-        with open(os.path.join(self.path_, self.filename), "r") as file_:
+        with open(os.path.join(self.path_, self.filename_), "r") as file_:
             self.file_ = file_.readlines()
 
     def __getitem__(self, idx):
@@ -55,15 +53,11 @@ class TextFileBase:
         return len(self.file_)
 
     def __repr__(self):
-        return f'{__class__.__name__}("{self.path_}\\{self.filename}")'
+        return f'{__class__.__name__}("{self.path_}\\{self.filename_}")'
 
     @property
     def filename(self):
-        return self.filename
-
-    @filename.setter
-    def filename(self, filename):
-        self.filename = filename
+        return self.filename_
 
     def readline(self):
         yield from self.file_
@@ -87,23 +81,3 @@ class TextFileBase:
 
     def findall_re(self, re_pattern, **kwargs):
         return [re.findall(re_pattern, str_, **kwargs) for str_ in self.file_]
-
-
-class Trc(TextFileBase):
-    def __init__(self, trc_file, path_):
-        super().__init__(trc_file, path_)
-        self.trc_file = trc_file
-
-    def __repr__(self):
-        return f'{__class__.__name__}("{self.path_}\\{self.filename}")'
-
-
-class Log(TextFileBase):
-    def __init__(self, log_file, path_):
-        super().__init__(log_file, path_)
-        self.log_file = log_file
-
-    def __repr__(self):
-        return f'{__class__.__name__}("{self.path_}\\{self.filename}")'
-
-    # [TODO] : method to parse .log file (Import, Export) to dict obj
