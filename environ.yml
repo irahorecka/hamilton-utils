@@ -1,7 +1,0 @@
-# Common directory paths in Hamilton program folder
-
-logfile: "C:\\Program Files (x86)\\HAMILTON\\LogFiles"
-methods: "C:\\Program Files (x86)\\HAMILTON\\Methods"
-library: "C:\\Program Files (x86)\\HAMILTON\\Library"
-labware: "C:\\Program Files (x86)\\HAMILTON\\LabWare"
-supporting_files: "C:\\Program Files (x86)\\HAMILTON\\SupportingFiles"
