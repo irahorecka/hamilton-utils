@@ -57,8 +57,13 @@ class TextFileBase:
     def __repr__(self):
         return f'{__class__.__name__}("{self.path_}\\{self.filename}")'
 
+    @property
     def filename(self):
         return self.filename
+
+    @filename.setter
+    def filename(self, filename):
+        self.filename = filename
 
     def readline(self):
         yield from self.file_
@@ -81,10 +86,7 @@ class TextFileBase:
         return [line for line in self.readline() if str_.lower() in line.lower()]
 
     def findall_re(self, re_pattern, **kwargs):
-        return [
-            (idx, re.findall(re_pattern, str_, **kwargs))
-            for idx, str_ in enumerate(self.file_)
-        ]
+        return [re.findall(re_pattern, str_, **kwargs) for str_ in self.file_]
 
 
 class Trc(TextFileBase):

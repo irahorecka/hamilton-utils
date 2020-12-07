@@ -1,4 +1,3 @@
-import hamutils
 from .base import HamiltonBase
 from .bat import admin_rm
 

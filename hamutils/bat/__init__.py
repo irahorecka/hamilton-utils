@@ -1,3 +1,1 @@
-from .bat import (
-    admin_rm,
-)
+from .bat import admin_rm
