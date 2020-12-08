@@ -25,6 +25,9 @@ class HamiltonBase:
     def listcsv(self):
         return [i for i in self.listdir() if i.endswith(".csv")]
 
+    def listini(self):
+        return [i for i in self.listdir() if i.endswith(".ini")]
+
     def listxls(self):
         return [i for i in self.listdir() if i.endswith(".xls")]
 

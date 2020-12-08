@@ -32,20 +32,17 @@ class LogFile(HamiltonBase):
     def rm_mdf(self):
         admin_rm(self.path_, "*.mdf")
 
-    def listtrc(self):
-        return [i for i in self.listdir() if i.endswith(".trc")]
+    def listldf(self):
+        return [i for i in self.listdir() if i.endswith(".ldf")]
 
     def listlog(self):
         return [i for i in self.listdir() if i.endswith(".log")]
 
-    def listini(self):
-        return [i for i in self.listdir() if i.endswith(".ini")]
-
-    def listldf(self):
-        return [i for i in self.listdir() if i.endswith(".ldf")]
-
     def listmdf(self):
         return [i for i in self.listdir() if i.endswith(".mdf")]
+
+    def listtrc(self):
+        return [i for i in self.listdir() if i.endswith(".trc")]
 
 
 class Methods(HamiltonBase):
@@ -58,6 +55,18 @@ class Methods(HamiltonBase):
 
     def __repr__(self):
         return f'{__class__.__name__}("{self.path_}")'
+
+    def listhsl(self):
+        return [i for i in self.listdir() if i.endswith(".hsl")]
+
+    def listlay(self):
+        return [i for i in self.listdir() if i.endswith(".lay")]
+
+    def listmed(self):
+        return [i for i in self.listdir() if i.endswith(".med")]
+
+    def listres(self):
+        return [i for i in self.listdir() if i.endswith(".res")]
 
 
 class Library(HamiltonBase):
