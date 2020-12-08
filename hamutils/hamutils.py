@@ -1,3 +1,4 @@
+import os
 from .base import HamiltonBase
 from .bat import admin_rm
 from .files import Trc, Log
@@ -21,7 +22,9 @@ class LogFile(HamiltonBase):
         self.file_obj = self.accepted_file_ext.get(file_ext)
         if not self.file_obj:
             raise Exception(f"{filename_} is not an accepted file.")
-        return self.file_obj(self.path_, filename_)
+        filepath_ = os.path.join(self.path_, filename_)
+
+        return self.file_obj(filepath_)
 
     def rm_ldf(self):
         admin_rm(self.path_, "*.ldf")
