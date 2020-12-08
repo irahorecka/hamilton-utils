@@ -43,11 +43,8 @@ class LogFile(HamiltonBase):
 
 
 class Methods(HamiltonBase):
-    def __init__(self, path_):
-        if not self.path_:
-            self.path_ = "C:\\Program Files (x86)\\HAMILTON\\Methods"
-        else:
-            self.path_ = path_
+    def __init__(self):
+        self.path_ = "C:\\Program Files (x86)\\HAMILTON\\Methods"
         super().__init__(self.path_)
 
     def __repr__(self):
@@ -67,11 +64,8 @@ class Methods(HamiltonBase):
 
 
 class Library(HamiltonBase):
-    def __init__(self, path_):
-        if not self.path_:
-            self.path_ = "C:\\Program Files (x86)\\HAMILTON\\Library"
-        else:
-            self.path_ = path_
+    def __init__(self):
+        self.path_ = "C:\\Program Files (x86)\\HAMILTON\\Library"
         super().__init__(self.path_)
 
     def __repr__(self):
@@ -79,11 +73,8 @@ class Library(HamiltonBase):
 
 
 class Labware(HamiltonBase):
-    def __init__(self, path_):
-        if not self.path_:
-            self.path_ = "C:\\Program Files (x86)\\HAMILTON\\Labware"
-        else:
-            self.path_ = path_
+    def __init__(self):
+        self.path_ = "C:\\Program Files (x86)\\HAMILTON\\Labware"
         super().__init__(self.path_)
 
     def __repr__(self):
@@ -91,11 +82,8 @@ class Labware(HamiltonBase):
 
 
 class SupportingFiles(HamiltonBase):
-    def __init__(self, path_):
-        if not self.path_:
-            self.path_ = "C:\\Program Files (x86)\\HAMILTON\\SupportingFiles"
-        else:
-            self.path_ = path_
+    def __init__(self):
+        self.path_ = "C:\\Program Files (x86)\\HAMILTON\\SupportingFiles"
         super().__init__(self.path_)
 
     def __repr__(self):
