@@ -19,18 +19,14 @@ class HamiltonBase:
     def path(self, path_):
         self.path_ = path_
 
-    def open(self, filename_):
-        file_ext = "." + filename_.split(".")[-1]
-        self.file_obj = self.accepted_file_ext.get(file_ext)
-        if not self.file_obj:
-            raise Exception(f"{filename_} is not an accepted file.")
-        return self.file_obj(filename_, self.path_)
-
     def listdir(self):
         return os.listdir(self.path_)
 
     def listcsv(self):
         return [i for i in self.listdir() if i.endswith(".csv")]
+    
+    def listini(self):
+        return [i for i in self.listdir() if i.endswith(".ini")]
 
     def listxls(self):
         return [i for i in self.listdir() if i.endswith(".xls")]
@@ -40,9 +36,9 @@ class HamiltonBase:
 
 
 class TextFileBase:
-    def __init__(self, filename_, path_):
-        self.filename_ = filename_
+    def __init__(self, path_, filename_):
         self.path_ = path_
+        self.filename_ = filename_
         with open(os.path.join(self.path_, self.filename_), "r") as file_:
             self.file_ = file_.readlines()
 
@@ -66,18 +62,15 @@ class TextFileBase:
         return self.file_
 
     def find(self, str_, ignore_case=False):
-        if not ignore_case:
-            for line in self.readline():
-                if str_ in line:
-                    yield line
-        for line in self.readline():
-            if str_.lower() in line.lower():
-                yield line
+        yield from self.findall(str_, ignore_case)
 
     def findall(self, str_, ignore_case=False):
         if not ignore_case:
             return [line for line in self.readline() if str_ in line]
         return [line for line in self.readline() if str_.lower() in line.lower()]
+
+    def find_re(self, re_pattern, **kwargs):
+        yield from self.findall_re(re_pattern, **kwargs)
 
     def findall_re(self, re_pattern, **kwargs):
         return [re.findall(re_pattern, str_, **kwargs) for str_ in self.file_]
