@@ -24,7 +24,7 @@ class HamiltonBase:
 
     def listcsv(self):
         return [i for i in self.listdir() if i.endswith(".csv")]
-    
+
     def listini(self):
         return [i for i in self.listdir() if i.endswith(".ini")]
 
@@ -63,6 +63,4 @@ class TextFileBase:
         yield from self.findall_re(re_pattern, **kwargs)
 
     def findall_re(self, re_pattern, **kwargs):
-        return [
-            re.findall(re_pattern, str_, **kwargs) for str_ in self.file_
-        ]
+        return [re.findall(re_pattern, str_, **kwargs) for str_ in self.file_]
