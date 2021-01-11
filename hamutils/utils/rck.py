@@ -1,10 +1,7 @@
 def parse(filepath):
+    """ Entry point from API. """
     return_list = parse_lay(filepath)
     return clean_labware_list(return_list)
-
-def open_lay(filepath):
-    with open(filepath, "r", encoding='latin-1') as file:
-        return file.readlines()
 
 
 def parse_lay(filepath):
@@ -34,6 +31,11 @@ def parse_lay(filepath):
             mother_labware_coord_list.append(coord_list)
 
     return mother_labware_coord_list
+
+
+def open_lay(filepath):
+    with open(filepath, "r", encoding="latin-1") as file:
+        return file.readlines()
 
 
 def clean_labware_list(list_):

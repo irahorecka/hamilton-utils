@@ -2,6 +2,7 @@ import os
 from .base import HamiltonBase
 from .bat import admin_rm
 from .files import Trc, Log
+from .utils import parse
 
 
 class LogFile(HamiltonBase):
@@ -82,6 +83,12 @@ class Labware(HamiltonBase):
 
     def __repr__(self):
         return f'{__class__.__name__}("{self.path_}")'
+
+    def get_coord(self, rck_filename):
+        return parse(os.path.join(self.path, rck_filename))
+
+    def get_all_coord(self):
+        pass
 
 
 class SupportingFiles(HamiltonBase):
