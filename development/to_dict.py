@@ -1,17 +1,3 @@
-from .base import TextFileBase
-
-
-class Trc(TextFileBase):
-    def __init__(self, filepath_):
-        super().__init__(filepath_)
-
-    def __repr__(self):
-        return f'{__class__.__name__}("{self.filepath_}")'
-
-    def to_dict(self):
-        return TrcDict(self.filepath_)
-
-
 class TrcDict:
     def __init__(self, trc):
         # accepts trc.readlines() (i.e. list of str)
@@ -73,11 +59,17 @@ class TrcDict:
         return kwargs
 
 
-class Log(TextFileBase):
-    def __init__(self, filepath_):
-        super().__init__(filepath_)
+if __name__ == "__main__":
+    from pprint import pprint
 
-    def __repr__(self):
-        return f'{__class__.__name__}("{self.filepath_}")'
-
-    # [TODO] : method to parse .log file (Import, Export) to dict obj
+    with open(
+        "DaugherPlatePrep with Channels_v2_1_9e15559ebbbf4a5aa09a436939787513_Trace.trc",
+        "r",
+    ) as trc:
+        trc = trc.read().splitlines()
+    converter = TrcDict(trc)
+    pprint(
+        converter.select("datetime", "callstatus", "callprogress", "extra")
+        .keep(lambda d: "50ulF" in d["extra"])
+        .mutate(test=lambda d: d["datetime"][:4])()
+    )
